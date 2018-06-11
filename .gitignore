@@ -1,0 +1,5 @@
+Bin/Debug
+Bin/Release
+
+Src/AngryWasp.Logger/obj
+Src/AngryWasp.Logger.Sample/obj
