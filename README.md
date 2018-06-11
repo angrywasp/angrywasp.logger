@@ -1,4 +1,4 @@
-# angrywasp-logger
+# AngryWasp.Logger
 
 ## Prerequisites
 
