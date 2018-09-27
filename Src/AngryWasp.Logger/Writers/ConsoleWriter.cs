@@ -30,8 +30,29 @@ namespace AngryWasp.Logger
 
         public void Write(Log_Severity severity, string value)
         {
+            switch (severity)
+            {
+                case Log_Severity.Fatal:
+                    Console.ForegroundColor = ConsoleColor.Magenta;
+                    break;
+                case Log_Severity.Error:
+                    Console.ForegroundColor = ConsoleColor.Red;
+                    break;
+                case Log_Severity.Warning:
+                    Console.ForegroundColor = ConsoleColor.Yellow;
+                    break;
+                case Log_Severity.Info:
+                    Console.ForegroundColor = ConsoleColor.White;
+                    break;
+                case Log_Severity.None:
+                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                    break;
+            }
+
 			output.WriteLine(value);
 			output.Flush();
+
+            Console.ForegroundColor = ConsoleColor.White;
         }
     }
 }
