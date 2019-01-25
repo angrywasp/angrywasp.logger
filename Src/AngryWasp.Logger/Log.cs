@@ -32,16 +32,9 @@ namespace AngryWasp.Logger
 
         private static Log instance = null;
 
-        public static Log Instance
-        {
-            get { return instance; }
-        }
+        public static Log Instance => instance;
 
-        public static Log CreateInstance(bool consoleOut = false, string outputFile = null)
-        {
-            instance = new Log(consoleOut, outputFile);
-            return instance;
-        }
+        public static Log CreateInstance(bool consoleOut = false, string outputFile = null) => new Log(consoleOut, outputFile);
 
         private Log(bool consoleOut = false, string outputFile = null)
         {
@@ -119,31 +112,15 @@ namespace AngryWasp.Logger
         /// <summary>
         /// Write an info message to the log
         /// </summary>
-        /// <param name="messageFormat">format of the string to pass into the log message</param>
-        /// <param name="parameters">the parameters to accompany messageFormat</param>
-        public string Write(string messageFormat, params object[] parameters)
-        {
-            string formattedMessage = string.Format(messageFormat, parameters);
-            return Write(formattedMessage, Log_Severity.Info);
-        }
+        /// <param name="message">Message to write to the log</param>
+        public string Write(string message) => Write(message, Log_Severity.Info);
 
         /// <summary>
         /// Write a message to the log. Requires user to state message severity. For general info message Write(string, params object[]) can be used
         /// </summary>
         /// <param name="severity">The severity of the error message</param>
-        /// <param name="messageFormat">format of the string to pass into the log message</param>
-        /// <param name="parameters">the parameters to accompany messageFormat</param>
-        public string Write(Log_Severity severity, string messageFormat, params object[] parameters)
-        {
-            string formattedMessage;
-
-            if(parameters.Length == 0)
-                formattedMessage = messageFormat;
-            else
-                formattedMessage = string.Format(messageFormat, parameters);
-
-            return Write(formattedMessage, severity);
-        }
+        /// <param name="message">Message to write to the log</param>
+        public string Write(Log_Severity severity, string message) => Write(message, severity);
 
         /// <summary>
         /// Writes an exception to the log and marks it as an error.
@@ -152,10 +129,7 @@ namespace AngryWasp.Logger
         /// <returns>The non fatal exception.</returns>
         /// <param name="ex">The exception that will be written to the log</param>
         /// <param name="additionalMessage">Additional message. Use for a description of the exception</param>
-        public string WriteNonFatalException(Exception ex, string additionalMessage = null)
-        {
-            return WriteException(Log_Severity.Warning, ex, additionalMessage);
-        }
+        public string WriteNonFatalException(Exception ex, string additionalMessage = null) => WriteException(Log_Severity.Warning, ex, additionalMessage);
 
         /// <summary>
         /// Writes an exception to the log and closes the application
@@ -163,10 +137,7 @@ namespace AngryWasp.Logger
         /// <returns>The fatal exception.</returns>
         /// <param name="ex">The exception that will be written to the log</param>
         /// <param name="additionalMessage">Additional message. Use for a description of the exception</param>
-        public Exception WriteFatalException(Exception ex, string additionalMessage = null)
-        {
-            return new Exception(WriteException(Log_Severity.Fatal, ex, additionalMessage));
-        }
+        public Exception WriteFatalException(Exception ex, string additionalMessage = null) => new Exception(WriteException(Log_Severity.Fatal, ex, additionalMessage));
 
         /// <summary>
         /// Flushes all ILogWriter buffers and closes all writers
@@ -185,7 +156,7 @@ namespace AngryWasp.Logger
         {
 			if (additionalMessage == null)
 			{
-				string s = Write(severity, "{0}\r\nStack:\r\n{1}", ex.Message, ex.StackTrace);
+				string s = Write(severity, $"{ex.Message}\r\nStack:\r\n{ex.StackTrace}");
 				if (ex.InnerException != null)
 					s += WriteException(severity, ex.InnerException);
 
@@ -193,13 +164,12 @@ namespace AngryWasp.Logger
 			}
 			else
 			{
-				string s = Write(severity, "{0}\r\nException:\r\n{1}\r\nStack:\r\n{2}", additionalMessage, ex.Message, ex.StackTrace);
+				string s = Write(severity, $"{additionalMessage}\r\nException:\r\n{ex.Message}\r\nStack:\r\n{ex.StackTrace}");
 				if (ex.InnerException != null)
 					s += WriteException(severity, ex.InnerException, additionalMessage);
 
 				return s;
 			}
         }
-
     }
 }
