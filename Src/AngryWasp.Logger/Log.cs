@@ -81,10 +81,11 @@ namespace AngryWasp.Logger
 
         private string Write(string message, Log_Severity severity = Log_Severity.Info)
         {
-            string formattedMessage = (severity == Log_Severity.None) ? message : string.Format("{0}: {1}", severity.ToString(), message);
+            if (severity != Log_Severity.None)
+                message = $"{severity.ToString()}: {message}";
 
             foreach(ILogWriter writer in writers.Values)
-                writer.Write(severity, formattedMessage);
+                writer.Write(severity, message);
 
             switch(severity)
             {
@@ -106,21 +107,23 @@ namespace AngryWasp.Logger
                     break;
             }
                     
-            return formattedMessage;
+            return message;
         }
 
         /// <summary>
         /// Write an info message to the log
         /// </summary>
         /// <param name="message">Message to write to the log</param>
-        public string Write(string message) => Write(message, Log_Severity.Info);
+        public string Write(string message) =>
+            Write(message, Log_Severity.Info);
 
         /// <summary>
         /// Write a message to the log. Requires user to state message severity. For general info message Write(string, params object[]) can be used
         /// </summary>
         /// <param name="severity">The severity of the error message</param>
         /// <param name="message">Message to write to the log</param>
-        public string Write(Log_Severity severity, string message) => Write(message, severity);
+        public string Write(Log_Severity severity, string message) =>
+            Write(message, severity);
 
         /// <summary>
         /// Writes an exception to the log and marks it as an error.
@@ -129,7 +132,8 @@ namespace AngryWasp.Logger
         /// <returns>The non fatal exception.</returns>
         /// <param name="ex">The exception that will be written to the log</param>
         /// <param name="additionalMessage">Additional message. Use for a description of the exception</param>
-        public string WriteNonFatalException(Exception ex, string additionalMessage = null) => WriteException(Log_Severity.Warning, ex, additionalMessage);
+        public string WriteNonFatalException(Exception ex, string additionalMessage = null) =>
+            WriteException(Log_Severity.Warning, ex, additionalMessage);
 
         /// <summary>
         /// Writes an exception to the log and closes the application
@@ -137,7 +141,8 @@ namespace AngryWasp.Logger
         /// <returns>The fatal exception.</returns>
         /// <param name="ex">The exception that will be written to the log</param>
         /// <param name="additionalMessage">Additional message. Use for a description of the exception</param>
-        public Exception WriteFatalException(Exception ex, string additionalMessage = null) => new Exception(WriteException(Log_Severity.Fatal, ex, additionalMessage));
+        public Exception WriteFatalException(Exception ex, string additionalMessage = null) =>
+            new Exception(WriteException(Log_Severity.Fatal, ex, additionalMessage));
 
         /// <summary>
         /// Flushes all ILogWriter buffers and closes all writers
