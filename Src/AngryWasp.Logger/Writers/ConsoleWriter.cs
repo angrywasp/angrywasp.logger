@@ -6,21 +6,22 @@ namespace AngryWasp.Logger
     public class ConsoleWriter : ILogWriter
     {
         private TextWriter output;
+        private ConsoleColor color = ConsoleColor.White;
+
+        public void SetColor(ConsoleColor color)
+        {
+            this.color = color;
+            Console.ForegroundColor = color;
+        }
 
         public ConsoleWriter()
         {
             output = Console.Out;
         }
 
-        public void Flush()
-        {
-            output.Flush();
-        }
+        public void Flush() => output.Flush();
 
-        public void Close()
-        {
-            output.Close();
-        }
+        public void Close() => output.Close();
 
 		public void WriteText(string value)
 		{
@@ -41,18 +42,16 @@ namespace AngryWasp.Logger
                 case Log_Severity.Warning:
                     Console.ForegroundColor = ConsoleColor.Yellow;
                     break;
-                case Log_Severity.Info:
-                    Console.ForegroundColor = ConsoleColor.White;
-                    break;
-                case Log_Severity.None:
-                    Console.ForegroundColor = ConsoleColor.DarkCyan;
+                default: //Info and None
+                    Console.ForegroundColor = color;
+                    Console.ForegroundColor = color;
                     break;
             }
 
 			output.WriteLine(value);
 			output.Flush();
 
-            Console.ForegroundColor = ConsoleColor.White;
+            Console.ForegroundColor = color;
         }
     }
 }

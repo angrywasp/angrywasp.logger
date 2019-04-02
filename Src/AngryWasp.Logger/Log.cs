@@ -19,6 +19,8 @@ namespace AngryWasp.Logger
         void Flush();
 
         void Close();
+
+		void SetColor(ConsoleColor color);
     }
 
     public class Log
@@ -28,7 +30,7 @@ namespace AngryWasp.Logger
 
         private Dictionary<string, ILogWriter> writers = new Dictionary<string, ILogWriter>();
 
-        public bool CrashOnError { get; set; }
+        public bool CrashOnError { get; set; } = false;
 
         private static Log instance = null;
 
@@ -50,6 +52,19 @@ namespace AngryWasp.Logger
 
             if(!String.IsNullOrEmpty(outputFile))
                 AddWriter("file", new FileWriter(outputFile), false);
+        }
+
+        //todo: this will reset the console color. 
+        //need to fix that
+        public bool SupressConsoleOutput
+        {
+            set
+            {
+                if (value)
+                    RemoveWriter("console");
+                else
+                    AddWriter("console", new ConsoleWriter(), false);
+            }
         }
 
         public void AddWriter(string name, ILogWriter writer, bool writeLogHeader)
@@ -74,6 +89,12 @@ namespace AngryWasp.Logger
             writers.Remove(name);
 
             return true;
+        }
+
+        public void SetColor(ConsoleColor color)
+        {
+            foreach (var w in writers.Values)
+                w.SetColor(color);
         }
 
         private void WriteLogHeader(ILogWriter writer)
