@@ -33,5 +33,10 @@ namespace AngryWasp.Logger
         {
             output.Close();
         }
+
+        public void SetColor(ConsoleColor color)
+        {
+            //do nothing
+        }
     }
 }
