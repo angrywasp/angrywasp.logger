@@ -1,26 +1,23 @@
 # AngryWasp.Logger
 
-## Prerequisites
-
-Mono/.NET
-
-- Ubuntu 17.10
-
-    `sudo apt-key adv --keyserver hkp://keyserver.ubuntu.com:80 --recv-keys 3FA7E0328081BFF6A14DA29AA6A19B38D3D831EF`  
-    `echo "deb http://download.mono-project.com/repo/ubuntu xenial/snapshots/5.8.0.127 main" | sudo tee /etc/apt/sources.list.d/mono.list`  
-    `sudo apt update`  
-    `sudo apt install mono-complete`
+Provides basic logging functionality.
 
 ## Building
 
-Linux requires .NET Core mono to build
+Requires .NET Core
 
-- Ubuntu 17.10
-
-    `cd ./AngryWasp.Logger`  
-    `dotnet restore`  
-    `msbuild /p:configuration=Release`
+`dotnet restore && dotnet build -c Release`
 
 ## How-To
 
-Check the file `AngryWasp.Logger.Sample/Program.cs` for example usage
+``` cs
+//Create a log instance that writes to the console
+Log.CreateInstance(true);
+Log.Instance.Write(Log_Severity.Info, "Info message");
+try {
+    //do something stupid
+} catch (Exception ex) {
+    Log.Instance.WriteFatalException(ex, "Exception, stacktrace and this message will be written to the log and the program closed");
+    //Can also use Log.Instance.WriteNonFatalException for the same functionality, but without quitting
+}
+```
