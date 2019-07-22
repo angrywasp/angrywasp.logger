@@ -38,7 +38,6 @@ namespace AngryWasp.Logger
                     break;
                 default: //Info and None
                     Console.ForegroundColor = color;
-                    Console.ForegroundColor = color;
                     break;
             }
 
