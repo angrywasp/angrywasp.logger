@@ -38,6 +38,9 @@ namespace AngryWasp.Logger
 
         public static Log CreateInstance(bool consoleOut = false, string outputFile = null)
         {
+            if (instance != null)
+                return instance;
+                
             instance = new Log(consoleOut, outputFile);
             return instance;
         } 
