@@ -47,9 +47,6 @@ namespace AngryWasp.Logger
 
         public Log(bool consoleOut = false, string outputFile = null)
         {
-            if (instance != null)
-                throw new Exception("Log is already initialized");
-
             if(consoleOut)
                 AddWriter("console", new ConsoleWriter(), false);
 
