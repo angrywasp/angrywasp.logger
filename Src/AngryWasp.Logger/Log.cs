@@ -45,7 +45,7 @@ namespace AngryWasp.Logger
             return instance;
         } 
 
-        private Log(bool consoleOut = false, string outputFile = null)
+        public Log(bool consoleOut = false, string outputFile = null)
         {
             if (instance != null)
                 throw new Exception("Log is already initialized");
