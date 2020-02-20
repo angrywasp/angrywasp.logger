@@ -2,5 +2,16 @@
 <Import Project="../../External/AngryWasp.Build/AngryWasp.Build.Common.targets"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <PackageId>AngryWasp.Logger</PackageId>
+    <Title>$(PackageId)</Title>
+    <Version>2.0.0</Version>
+    <Authors>AngryWasp</Authors>
+    <PackageDescription>Basic Logging library</PackageDescription>
+    <PackageLicenseFile>AngryWasp.LICENSE.txt</PackageLicenseFile>
+    <RepositoryUrl>https://bitbucket.org/angrywasp/angrywasp.logger</RepositoryUrl>
   </PropertyGroup>
+  <ItemGroup>
+    <None Include="../../External/AngryWasp.Build/LICENSE.txt" Pack="true" PackagePath="$(PackageLicenseFile)"/>
+  </ItemGroup>
 </Project>
