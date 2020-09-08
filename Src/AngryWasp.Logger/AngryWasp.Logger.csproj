@@ -1,11 +1,11 @@
 <Project Sdk="Microsoft.NET.Sdk">
-<Import Project="../../External/AngryWasp.Build/AngryWasp.Build.Common.targets"/>
+<Import Project="../../External/AngryWasp.Build/AngryWasp.Build.Library.targets"/>
   <PropertyGroup>
     <OutputType>Library</OutputType>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <PackageId>AngryWasp.Logger</PackageId>
     <Title>$(PackageId)</Title>
-    <Version>2.0.0</Version>
+    <Version>2.1.0</Version>
     <Authors>AngryWasp</Authors>
     <PackageDescription>Basic Logging library</PackageDescription>
     <PackageLicenseFile>AngryWasp.LICENSE.txt</PackageLicenseFile>
